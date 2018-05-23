@@ -2,7 +2,8 @@
   "users": [
     {
       "id": 1,
-      "username": "fds"
+      "username": "fds",
+      "hashedPassword": "$2a$10$BOQ5L57X4TtYNoiTdnTRPeW6guPuVfWvv/eH5FgE5SiKSQDacpWMa"
     }
   ],
   "posts": [
