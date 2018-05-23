@@ -1,4 +1,16 @@
 body {
   background-color: skyblue;
 }
+
+.root--authed .post-list__login-btn {
+  display: none;
+}
+
+.post-list__logout-btn {
+  display: none;
+}
+
+.root--authed .post-list__logout-btn {
+  display: inline-block;
+}
 /*# sourceMappingURL=index.css.map */
