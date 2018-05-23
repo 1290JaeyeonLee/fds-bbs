@@ -4,11 +4,22 @@ const postAPI = axios.create({});
 const rootEl = document.querySelector('.root');
 
 //axios를 모두 postAPI로 변경
-if(localStorage.getItem('token')){
-  postAPI.defaults.headers['Authorization'] =`Bearer ${localStorage.getItem('token')}`;
-  rootEl.classList.add('root--authed');//modifier 특정상태(로그인)
-}
 
+
+function login(token) {
+  localStorage.setItem('token', token);
+  //alert(res.data.token);
+  //alert(JSON.stringify(payload))
+  postAPI.defaults.headers['Authorization'] = `Bearer ${token}`;
+  //defaults라는 객체(설정객체의 기본값)에 header설정
+  //객체의 표기법 중 대괄호 표기법으로 나타냄, - 은 점표기법으로 쓸 수 없다.
+  rootEl.classList.add('root--authed');
+}
+function logout() {
+  localStorage.removeItem('token');
+  delete postAPI.defaults.headers['Authorization'];
+  rootEl.classList.remove('root--authed');
+}
 const templates = {
   postList: document.querySelector('#post-list').content,
   postItem: document.querySelector('#post-item').content,
@@ -31,9 +42,7 @@ async function indexPage() {
     loginPage();
   })
   listFragment.querySelector('.post-list__logout-btn').addEventListener('click', e => {
-    localStorage.removeItem('token');
-    delete postAPI.defaults.headers['Authorization'];
-    rootEl.classList.remove('root--authed');
+    logout();
     indexPage();
   })
   listFragment.querySelector('.post-list__new-post-btn').addEventListener('click', e => {
@@ -82,13 +91,7 @@ async function loginPage() {
     e.preventDefault(); // 폼의 내장기능
     
     const res = await postAPI.post('http://localhost:3000/users/login', payload);
-    localStorage.setItem('token', res.data.token);
-    //alert(res.data.token);
-    //alert(JSON.stringify(payload))
-    postAPI.defaults.headers['Authorization'] = `Bearer ${res.data.token}`;
-    //defaults라는 객체(설정객체의 기본값)에 header설정
-    //객체의 표기법 중 대괄호 표기법으로 나타냄, - 은 점표기법으로 쓸 수 없다.
-    rootEl.classList.add('root--authed');
+    login(res.data.token);
     indexPage();
   })
   render(fragment);
@@ -111,6 +114,10 @@ async function postFormPage(){
   })
 
   render(fragment);
+}
+
+if(localStorage.getItem('token')){
+  login(localStorage.getItem('token'));
 }
 
 indexPage();
