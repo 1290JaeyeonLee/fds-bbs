@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const postAPI = axios.create({});
 //axios를 모두 postAPI로 변경
-
+if(localStorage.getItem('token')){
+  postAPI.defaults.headers['Authorization'] = localStorage.getItem('token');
+}
 const rootEl = document.querySelector('.root');
 const templates = {
   postList: document.querySelector('#post-list').content,
@@ -24,7 +26,11 @@ async function indexPage() {
   listFragment.querySelector('.post-list__login-btn').addEventListener('click', e => {
     loginPage();
   })
-
+  listFragment.querySelector('.post-list__logout-btn').addEventListener('click', e => {
+    localStorage.removeItem('token');
+    delete postAPI.defaults.headers['Authorization'];
+    indexPage();
+  })
    res.data.forEach(post => {
      //임시로 보관하는 통
      const fragment = document.importNode(templates.postItem, true);
