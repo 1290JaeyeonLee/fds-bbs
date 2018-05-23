@@ -12,6 +12,18 @@
       "userId": 1,
       "title": "Hello FDS JSON Server :)",
       "body": "..."
+    },
+    {
+      "title": "안녕하세요",
+      "body": "히히",
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "title": "새글",
+      "body": "새내용",
+      "userId": 1,
+      "id": 3
     }
   ],
   "comments": [

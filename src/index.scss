@@ -4,7 +4,6 @@ body {
   background-color: $main-color;
 }
 
-
 .post-list {
   &__login-btn {
     .root--authed & {
@@ -13,10 +12,10 @@ body {
     }
   }
 
-  &__logout-btn {
+  &__logout-btn, &__new-post-btn {
     display: none;
     .root--authed & {
       display: inline-block;
     }
-  }    
+  } 
 }

@@ -14,6 +14,7 @@ const templates = {
   postItem: document.querySelector('#post-item').content,
   postContent: document.querySelector('#post-content').content,
   login: document.querySelector('#login').content,
+  postForm: document.querySelector('#post-form').content,
 }
 
 function render(fragment){
@@ -23,8 +24,8 @@ function render(fragment){
 
 async function indexPage() {
   const res = await postAPI.get('http://localhost:3000/posts');
-   //importnode는 템플릿안에 있는 것들을 복사하여 fragment라는 임시저장소에 복사를 한다. 그 복사본에 내용을 채워넣는 것이다.
-   const listFragment = document.importNode(templates.postList, true)
+   //importNode는 템플릿안에 있는 것들을 복사하여 fragment라는 임시저장소에 복사를 한다. 그 복사본에 내용을 채워넣는 것이다.
+  const listFragment = document.importNode(templates.postList, true)
 
   listFragment.querySelector('.post-list__login-btn').addEventListener('click', e => {
     loginPage();
@@ -35,7 +36,10 @@ async function indexPage() {
     rootEl.classList.remove('root--authed');
     indexPage();
   })
-   res.data.forEach(post => {
+  listFragment.querySelector('.post-list__new-post-btn').addEventListener('click', e => {
+    postFormPage();
+  })
+  res.data.forEach(post => {
      //임시로 보관하는 통
      const fragment = document.importNode(templates.postItem, true);
      // const pEl = document.createElement('p');
@@ -89,6 +93,24 @@ async function loginPage() {
   })
   render(fragment);
 }
+async function postFormPage(){
+  const fragment = document.importNode(templates.postForm, true);
+  fragment.querySelector('.post-form__back-btn').addEventListener('click', e => {
+    e.preventDefault();
+    indexPage();
+  })
+  fragment.querySelector('.post-form').addEventListener('submit', async e => {
+    e.preventDefault(); // 새로고침을 막는다.
+    const payload = {
+      title: e.target.elements.title.value,
+      body: e.target.elements.body.value
+    }
+    const res = await postAPI.post('http://localhost:3000/posts', payload);
+    console.log(res);
+    postContentPage(res.data.id);
+  })
 
+  render(fragment);
+}
 
 indexPage();

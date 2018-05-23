@@ -6,11 +6,11 @@ body {
   display: none;
 }
 
-.post-list__logout-btn {
+.post-list__logout-btn, .post-list__new-post-btn {
   display: none;
 }
 
-.root--authed .post-list__logout-btn {
+.root--authed .post-list__logout-btn, .root--authed .post-list__new-post-btn {
   display: inline-block;
 }
 /*# sourceMappingURL=index.css.map */
