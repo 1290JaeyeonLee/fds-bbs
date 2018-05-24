@@ -7,8 +7,6 @@ const postAPI = axios.create({
 
 const rootEl = document.querySelector('.root');
 
-
-
 function login(token) {
   localStorage.setItem('token', token);
   //alert(res.data.token);
@@ -39,7 +37,7 @@ function render(fragment){
 }
 
 async function indexPage() {
-  const res = await postAPI.get('/posts');
+  const res = await postAPI.get('/posts?_expand=user');
    //importNode는 템플릿안에 있는 것들을 복사하여 fragment라는 임시저장소에 복사를 한다. 그 복사본에 내용을 채워넣는 것이다.
   const listFragment = document.importNode(templates.postList, true)
 
@@ -56,6 +54,7 @@ async function indexPage() {
   res.data.forEach(post => {
      //임시로 보관하는 통
      const fragment = document.importNode(templates.postItem, true);
+     fragment.querySelector('.post-item__author').textContent = post.user.username;
      // const pEl = document.createElement('p');
      const pEl = fragment.querySelector('.post-item__title');
      pEl.textContent = post.title;
