@@ -37,8 +37,11 @@ function render(fragment){
 }
 
 async function indexPage() {
+  rootEl.classList.add('root--loading');
+  //await는 promise를 기다린다.
   const res = await postAPI.get('/posts?_expand=user');
    //importNode는 템플릿안에 있는 것들을 복사하여 fragment라는 임시저장소에 복사를 한다. 그 복사본에 내용을 채워넣는 것이다.
+  rootEl.classList.remove('root--loading');
   const listFragment = document.importNode(templates.postList, true)
 
   listFragment.querySelector('.post-list__login-btn').addEventListener('click', e => {
