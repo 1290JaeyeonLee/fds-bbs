@@ -24,6 +24,12 @@
       "body": "새내용",
       "userId": 1,
       "id": 3
+    },
+    {
+      "title": "d",
+      "body": "d",
+      "userId": 1,
+      "id": 4
     }
   ],
   "comments": [
@@ -61,6 +67,18 @@
       "postId": "1",
       "userId": 1,
       "id": 6
+    },
+    {
+      "body": "d",
+      "postId": "4",
+      "userId": 1,
+      "id": 7
+    },
+    {
+      "body": "sdfsdff",
+      "postId": "1",
+      "userId": 1,
+      "id": 8
     }
   ]
 }
