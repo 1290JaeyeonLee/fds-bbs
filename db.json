@@ -40,45 +40,16 @@
       "body": "🍺🎉"
     },
     {
-      "postId": "1",
-      "userId": 1,
-      "id": 2
-    },
-    {
-      "body": "댓글",
-      "postId": "1",
-      "userId": 1,
-      "id": 3
-    },
-    {
-      "body": "댓글2",
-      "postId": "1",
-      "userId": 1,
-      "id": 4
-    },
-    {
       "body": "안녕",
       "postId": "2",
       "userId": 1,
       "id": 5
     },
     {
-      "body": "eotrmf",
-      "postId": "1",
-      "userId": 1,
-      "id": 6
-    },
-    {
       "body": "d",
       "postId": "4",
       "userId": 1,
       "id": 7
-    },
-    {
-      "body": "sdfsdff",
-      "postId": "1",
-      "userId": 1,
-      "id": 8
     }
   ]
 }

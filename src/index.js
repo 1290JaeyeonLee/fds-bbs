@@ -89,9 +89,22 @@ async function postContentPage(postId){
 
     commentsRes.data.forEach(comment => {
       const itemFragment = document.importNode(templates.commentItem, true);
-      itemFragment.querySelector('.comment-item__body').textContent = comment.body;
+      const bodyEl = itemFragment.querySelector('.comment-item__body');
+      const removeButtonEl = itemFragment.querySelector('.comment-item__remove-btn');
+      bodyEl.textContent = comment.body;
       commentsFragment.querySelector('.comments__list').appendChild(itemFragment);
+      removeButtonEl.addEventListener('click', async e =>{
+        // p태그와 button 태그 삭제
+        bodyEl.remove();        
+        removeButtonEl.remove();
+        // delete요청 보내기
+        const res = await postAPI.delete(`/comments/${comment.id}`);
+        // posts/2/comments/1 -> error
+
+        //만약 요청이 실패했을 경우 원상 복구 (생략)
+      })
     })
+
     const formEl = commentsFragment.querySelector('.comments__form');
     formEl.addEventListener('submit', async e => {
       e.preventDefault();
