@@ -3,9 +3,10 @@ import axios from 'axios';
 const postAPI = axios.create({
   baseURL : process.env.API_URL
 });
+//axios를 모두 postAPI로 변경
+
 const rootEl = document.querySelector('.root');
 
-//axios를 모두 postAPI로 변경
 
 
 function login(token) {
@@ -28,6 +29,8 @@ const templates = {
   postContent: document.querySelector('#post-content').content,
   login: document.querySelector('#login').content,
   postForm: document.querySelector('#post-form').content,
+  comments: document.querySelector('#comments').content,
+  commentItem: document.querySelector('#comment-item').content,
 }
 
 function render(fragment){
@@ -73,7 +76,23 @@ async function postContentPage(postId){
   fragment.querySelector('.post-content__back-btn').addEventListener('click', e => {
     indexPage();
   })
+  // 실제로 html에 코드를 변경하는 방식 (css로 숨기는 방법)이 아닌 js로 숨기는 방식
+  // 로그인했을때만 댓글 보이게 하기
+  if (localStorage.getItem('token')) {
+    const commentsFragment = document.importNode(templates.comments, true);
+
+    const commentsRes = await postAPI.get(`/posts/${postId}/comments`);
+
+    commentsRes.data.forEach(comment => {
+      const itemFragment = document.importNode(templates.commentItem, true);
+      itemFragment.querySelector('.comment-item__body').textContent = comment.body;
+      commentsFragment.querySelector('.comments__list').appendChild(itemFragment);
+    })
+    fragment.appendChild(commentsFragment);
+  } 
   render(fragment);
+  // const commentFragment = document.importNode(templates.postComment, true);
+  // render(commentFragment);
 }
 
 async function loginPage() {
@@ -117,6 +136,8 @@ async function postFormPage(){
 
   render(fragment);
 }
+
+
 
 if(localStorage.getItem('token')){
   login(localStorage.getItem('token'));
