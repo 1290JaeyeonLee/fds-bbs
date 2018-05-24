@@ -87,11 +87,19 @@ async function postContentPage(postId){
       itemFragment.querySelector('.comment-item__body').textContent = comment.body;
       commentsFragment.querySelector('.comments__list').appendChild(itemFragment);
     })
+    const formEl = commentsFragment.querySelector('.comments__form');
+    formEl.addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        body: e.target.elements.body.value
+      };
+      const res = await postAPI.post(`/posts/${postId}/comments`, payload);
+      postContentPage(postId);
+      // 사용자가 정보를 추가하거나 갱신할 때 최신 데이터를 반영한다, 변경된 사항이 없는 경우엔 불필요한 전송 
+    });
     fragment.appendChild(commentsFragment);
   } 
   render(fragment);
-  // const commentFragment = document.importNode(templates.postComment, true);
-  // render(commentFragment);
 }
 
 async function loginPage() {
