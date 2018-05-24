@@ -71,7 +71,9 @@ async function indexPage() {
 }
 
 async function postContentPage(postId){
+  rootEl.classList.add('root--loading');
   const res = await postAPI.get(`/posts/${postId}`);
+  rootEl.classList.remove('root--loading');
   const fragment = document.importNode(templates.postContent, true);
   fragment.querySelector('.post-content__title').textContent = res.data.title;
   fragment.querySelector('.post-content__body').textContent = res.data.body;
